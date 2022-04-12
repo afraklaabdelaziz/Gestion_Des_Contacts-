@@ -1,12 +1,21 @@
+//header toggle
+const menu = document.querySelector(".fa-bars");
+const list = document.querySelector(".list");
+const header = document.querySelector(".ContainerHeader");
+menu.addEventListener("click", function () {
+    list.classList.toggle("d-none");
+    list.classList.toggle("list1");
+    header.classList.toggle("header");
+})
 // form validation 
 const form = document.getElementById('form');
 const userName = document.getElementById('name');
-// const email = document.getElementById('email');
+const email = document.getElementById('email');
 const pass = document.getElementById('pass');
 const passC = document.getElementById('passC');
 let valid = true;
 let regexName = /[A-Za-z]{4,20}$/;
-// let regexEmail = /^(^[a-z0-9-_.][a-z0-9]+@(gmail|outlook).(com|fr|ma))$/;
+let regexEmail = /^(^[a-z0-9-_.][a-z0-9]+@(gmail|outlook).(com|fr|ma))$/;
 let regexPass = /[A-Za-z]{6,16}[0-9]{2,16}$/;
 // function success de validation 
 function success(elem) {
@@ -35,7 +44,7 @@ form.addEventListener('submit', (e) => {
 });
 function validateInput() {
     const nameValue = userName.value.trim();
-    // const emailValue = email.value.trim();
+    const emailValue = email.value.trim();
     const passValue = pass.value.trim();
     const passConfValue = passC.value.trim();
     if (nameValue == '') {
@@ -45,13 +54,13 @@ function validateInput() {
     } else {
         success(userName);
     }
-    // if (emailValue == '') {
-    //     error(email, 'please enter your Email');
-    // } else if (regexEmail.test(emailValue) == false) {
-    //     error(email, 'format email is not valid')
-    // } else {
-    //     success(email);
-    // }
+    if (emailValue == '') {
+        error(email, 'please enter your Email');
+    } else if (regexEmail.test(emailValue) == false) {
+        error(email, 'format email is not valid')
+    } else {
+        success(email);
+    }
     if (passValue == '') {
         error(pass, 'please enter your Password');
     } else if (regexPass.test(passValue) == false) {

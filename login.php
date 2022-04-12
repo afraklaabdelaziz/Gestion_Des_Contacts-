@@ -20,6 +20,7 @@ include 'components/header.php';
         <input type="submit" class="btn bg-info mt-2 form-control rounded-pill" name="signin" value=" SING IN">
     </form>
 </div>
+<script src="javaScript/contact.js"></script>
 </body>
 
 </html>

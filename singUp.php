@@ -29,5 +29,4 @@ include 'components/header.php';
 </div>
 <script src="javaScript/formValidation.js"></script>
 </body>
-
 </html>

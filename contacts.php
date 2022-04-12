@@ -10,25 +10,51 @@ include 'components/header.php';
 </div>
 <!-- form to add contact -->
 <div class="modelAddC">
-    <form class="modal" method="POST">
+    <form class="modal" id="form" method="POST">
         <p class="h2">Add contact</p>
         <i class="fas fa-times closeAddC btn position-absolute end-0 fs-3"></i>
-        <input class="rounded-pill p-2" type="text" placeholder="enter name contact" name="name">
-        <input class="rounded-pill p-2" type="email" placeholder="enter email contact" name="email">
-        <input class="rounded-pill p-2" type="text" placeholder="enter phone contact" name="phone">
-        <input class="rounded-pill p-2" type="text" placeholder="enter adresse contact" name="adresse">
+        <div>
+            <input class="rounded-pill p-2 w-100" id="name" type="text" placeholder="enter name contact" name="name">
+            <div class="error text-danger"></div>
+        </div>
+        <div>
+            <input class="rounded-pill p-2 w-100" id="email" type="email" placeholder="enter email contact" name="email">
+            <div class="error text-danger"></div>
+        </div>
+        <div>
+            <input class="rounded-pill p-2 w-100" id="phone" type="text" placeholder="enter phone contact" name="phone">
+            <div class="error text-danger"></div>
+        </div>
+        <div>
+            <input class="rounded-pill p-2 w-100" id="adresse" type="text" placeholder="enter adresse contact" name="adresse">
+            <div class="error text-danger"></div>
+        </div>
+
         <input class="rounded-pill p-2 bg-info" type="submit" value="Save" name="save">
     </form>
 </div>
 <!-- form to update contact -->
 <div class="modelEditC">
-    <form class="modal" method="POST">
+    <form class="modal" id="form" method="POST" action="">
         <p class="h2">Update profile</p>
         <i class="fas fa-times closeEditC btn position-absolute end-0 fs-3"></i>
-        <input class="rounded-pill p-2" type="text" value="afrakla abdelaziz" name="name">
-        <input class="rounded-pill p-2" type="email" value="afraklabdelaziz@gmail.com" name="email">
-        <input class="rounded-pill p-2" type="text" value="0639616681" name="phone">
-        <input class="rounded-pill p-2" type="text" value="Mezguita, agdz, zagora" name="adresse">
+        <div>
+            <input class="rounded-pill p-2 w-100" id="name" type="text" value="afrakla abdelaziz" name="name">
+            <div class="error text-danger"></div>
+        </div>
+        <div>
+            <input class="rounded-pill p-2 w-100" id="email" type="email" value="afraklabdelaziz@gmail.com" name="email">
+            <div class="error text-danger"></div>
+        </div>
+        <div>
+            <input class="rounded-pill p-2 w-100" id="phone" type="text" value="0639616681" name="phone">
+            <div class="error text-danger"></div>
+        </div>
+
+        <div>
+            <input class="rounded-pill p-2 w-100" id="adresse" type="text" value="Mezguita, agdz, zagora" name="adresse">
+            <div class="error text-danger"></div>
+        </div>
         <input class="rounded-pill p-2 bg-info" type="submit" value="Update" name="edit">
     </form>
 </div>
@@ -182,6 +208,7 @@ include 'components/header.php';
     </table>
 </div>
 <script src="javascript/contact.js"></script>
+
 </body>
 
 </html>
