@@ -1,0 +1,96 @@
+.list1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 40px;
+    left: 40%;
+    position: absolute;
+}
+
+.header {
+    height: 120px;
+}
+
+input,
+.ContainerHeader {
+    background-color: #CAF0F8 !important;
+    border: 0 !important;
+}
+
+.container_signp {
+    height: 80vh;
+}
+
+.addContactFixed {
+    position: sticky;
+    top: 8%;
+    background-color: white;
+}
+
+/* Modal */
+.modelEditP,
+.modelDetails,
+.modelAddC,
+.modelEditC {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.71);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s;
+}
+
+.modal-active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.modal {
+    position: absolute;
+    top: auto;
+    left: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    width: 350px;
+    height: 450px;
+    background-color: white;
+    gap: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: 03045E;
+    font-weight: bold;
+    padding: 9px;
+}
+
+table {
+    width: 1600px !important;
+}
+
+thead,
+tbody,
+th,
+tr {
+    border-style: none !important;
+}
+
+table tr {
+    height: 50px;
+    --bs-table-striped-bg: #BFDAE2 !important;
+}
+
+.success input {
+    border: 2px solid rgb(31, 194, 31);
+}
+
+.error input {
+    border: solid 2px red;
+}
