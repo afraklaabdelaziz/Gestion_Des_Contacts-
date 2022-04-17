@@ -13,7 +13,6 @@ include 'components/header.php'
     <a href="login.php" class="rounded-pill btn btn-info col-10 col-md-2 text-white fw-bold mx-5">Login</a>
     <a href="singUp.php" class="rounded-pill btn btn-info col-10 col-md-2 text-white fw-bold">Signup</a>
 </div>
-<script src="javaScript/contact.js"></script>
 </body>
 
 </html>

@@ -1,12 +1,3 @@
-//header toggle
-const menu = document.querySelector(".fa-bars");
-const list = document.querySelector(".list");
-const header = document.querySelector(".ContainerHeader");
-menu.addEventListener("click", function () {
-    list.classList.toggle("d-none");
-    list.classList.toggle("list1");
-    header.classList.toggle("header");
-})
 // form validation 
 const form = document.getElementById('form');
 const userName = document.getElementById('name');

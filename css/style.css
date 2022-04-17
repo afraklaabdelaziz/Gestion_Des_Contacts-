@@ -17,7 +17,7 @@ input,
     border: 0 !important;
 }
 
-.container_signp {
+.container_signup {
     height: 80vh;
 }
 
@@ -35,8 +35,8 @@ input,
     position: fixed;
     top: 0;
     right: 0;
-    height: 100%;
     width: 100%;
+    height: 100%;
     background-color: rgba(0, 0, 0, 0.71);
     display: flex;
     justify-content: center;
@@ -59,7 +59,7 @@ input,
     flex-direction: column;
     padding: 20px;
     width: 350px;
-    height: 75vh;
+    height: auto;
     background-color: white;
     gap: 20px;
 }
@@ -87,7 +87,7 @@ table tr {
     --bs-table-striped-bg: #BFDAE2 !important;
 }
 
-.success input {
+.success input{
     border: 2px solid rgb(31, 194, 31);
 }
 

@@ -1,11 +1,3 @@
-const menu = document.querySelector(".fa-bars");
-const list = document.querySelector(".list");
-const header = document.querySelector(".ContainerHeader");
-menu.addEventListener("click", function () {
-    list.classList.toggle("d-none");
-    list.classList.toggle("list1");
-    header.classList.toggle("header");
-})
 const addContact = document.querySelector(".addContact");
 const updateContact = document.querySelectorAll(".updateContact");
 for (const upContact of updateContact ) {
@@ -23,29 +15,15 @@ addContact.addEventListener("click", function () {
 closeAddC.addEventListener("click", function () {
     modalAddC.classList.toggle("modal-active")
 })
-
 closeEditC.addEventListener("click", function () {
     modalEditeC.classList.toggle("modal-active")
 })
-
-// form validation 
-const formAddContact = document.getElementById('form');
-const nameContact = document.getElementById('name');
-const emailContact = document.getElementById('email');
-const phoneContact = document.getElementById('phone');
-// const numberStudent = document.getElementById('number');
-// const dateStudent = document.getElementById('date');
-validC = true;
-let regexWord = /[A-Za-z ]{4,20}$/;
-let regexEmail = /^(^[a-z0-9-_.][a-z0-9]+@(gmail|outlook).(com|fr|ma))$/;
-let regexNumber = /[0-9]{2,20}/
-// validation form add Students
-formAddContact.addEventListener('submit', (event) => {
-    validInputContact();
-    if (validC === false) {
-        event.preventDefault();
-    }
-});
+valid = 0;
+// regex
+let regexName = /[A-Za-z ]{3,20}$/;
+let regexEmail = /([a-z0-9-_.][a-z0-9]+@(gmail|outlook).(com|fr|ma))$/;
+let regexPhone = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/;
+let regexAdresse = /^[a-zA-Z0-9\s\,\''\-]*$/;
 // function success de validation 
 function success(elem) {
     const input = elem.parentElement;
@@ -53,7 +31,6 @@ function success(elem) {
     error.textContent = '';
     input.classList.add('success');
     input.classList.remove('error');
-    validC = true;
 }
 // function error de validation 
 function error(elem, msg) {
@@ -62,28 +39,91 @@ function error(elem, msg) {
     error.textContent = msg;
     input.classList.add('error');
     input.classList.remove('success');
-    validC = false;
+    valid++;
 }
-function validInputContact() {
-    if (nameContact.value == '') {
-        error(nameContact, 'please enter name');
-    } else if (regexWord.test(nameContact.value) == false) {
-        error(nameContact, 'format is not valid');
-    } else {
-        success(nameContact);
+// form validation add contact 
+const formAddContact = document.getElementById('formAdd');
+const nameAddContact = document.getElementById('nameAdd');
+const emailAddContact = document.getElementById('emailAdd');
+const phoneAddContact = document.getElementById('phoneAdd');
+const adresseAddContact = document.getElementById('adresseAdd');
+// validation form add Students
+formAddContact.addEventListener('submit', (event) => {
+    validInputAddContact();
+    if (valid !== 0) {
+        event.preventDefault();
     }
-    if (emailContact.value == '') {
-        error(emailContact, 'please enter email');
-    } else if (regexEmail.test(emailContact.value) == false) {
-        error(emailContact, 'format email is not valid')
+});
+function validInputAddContact() {
+    if (nameAddContact.value == '') {
+        error(nameAddContact, 'please enter name contact');
+    } else if (regexName.test(nameContact.value) == false) {
+        error(nameAddContact, 'format is not valid');
     } else {
-        success(emailContact);
+        success(nameAddContact);
     }
-    if (phoneContact.value == '') {
-        error(phoneContact, 'please enter phone');
-    } else if (regexWord.test(phoneContact.value) == false) {
-        error(phoneContact, 'format is not valid');
+    if (emailAddContact.value == '') {
+        error(emailAddContact, 'please enter email contact');
+    } else if (regexEmail.test(emailAddContact.value) == false) {
+        error(emailAddContact, 'format email is not valid')
     } else {
-        success(phoneContact);
+        success(emailAddContact);
+    }
+    if (phoneAddContact.value == '') {
+        error(phoneAddContact, 'please enter phone contact');
+    } else if (regexPhone.test(phoneAddContact.value) == false) {
+        error(phoneAddContact, 'format is not valid');
+    } else {
+        success(phoneAddContact);
+    }
+    if (adresseAddContact.value == '') {
+        error(adresseAddContact, 'please enter Adresse contact');
+    } else if (regexAdresse.test(adresseAddContact.value) == false) {
+        error(adresseAddContact, 'format is not valid');
+    } else {
+        success(adresseAddContact);
+    }
+}
+// form validation update contact
+const formEditContact = document.getElementById('formEdit');
+const nameEditContact = document.getElementById('nameEdit');
+const emailEditContact = document.getElementById('emailEdit');
+const phoneEditContact = document.getElementById('phoneEdit');
+const adresseEditContact = document.getElementById('adresseEdit');
+
+formEditContact.addEventListener('submit', (event) => {
+    validInputEditContact();
+    if (valid !== 0) {
+        event.preventDefault();
+    }
+});
+function validInputEditContact() {
+    if (nameEditContact.value == '') {
+        error(nameEditContact, 'please enter name contact');
+    } else if (regexName.test(nameEditContact.value) == false) {
+        error(nameEditContact, 'format is not valid');
+    } else {
+        success(nameEditContact);
+    }
+    if (emailEditContact.value == '') {
+        error(emailEditContact, 'please enter email contact');
+    } else if (regexEmail.test(emailEditContact.value) == false) {
+        error(emailEditContact, 'format email is not valid')
+    } else {
+        success(emailEditContact);
+    }
+    if (phoneEditContact.value == '') {
+        error(phoneEditContact, 'please enter phone contact');
+    } else if (regexPhone.test(phoneEditContact.value) == false) {
+        error(phoneEditContact, 'format is not valid');
+    } else {
+        success(phoneEditContact);
+    }
+    if (adresseEditContact.value == '') {
+        error(adresseEditContact, 'please enter Adresse contact');
+    } else if (regexAdresse.test(adresseEditContact.value) == false) {
+        error(adresseEditContact, 'format is not valid');
+    } else {
+        success(adresseEditContact);
     }
 }
