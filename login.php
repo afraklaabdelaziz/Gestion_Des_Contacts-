@@ -10,6 +10,9 @@ include 'Class/User.php';
     <form id="form" class="col-md-4 col-11" method="POST">
         <p class="text-center fw-bold h2 mt-2">SING IN</p>
         <p class="text-center">Entre your credentials to access your account</p>
+        <?php if (isset($_GET['error'])) { ?>
+            <p class="alert alert-danger"> <?php echo $_GET['error']; ?></p>
+        <?php } ?>
         <div class="form-group p-1">
             <label>User Name</label>
             <input class="form-control rounded-pill" name="username" type="text" placeholder="user name">

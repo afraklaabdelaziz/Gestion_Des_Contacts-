@@ -1,10 +1,10 @@
 <?php
+session_start();
 $list1 = "<a href='profile.php'>Profile</a>";
 $list2 = "<a href='login.php'>Logout</a>";
 include 'components/head.php';
 include 'components/header.php';
-// include 'Class/Contact.php';
-require 'Class/User.php'
+include 'Class/Contact.php';
 ?>
 <div class="d-flex justify-content-between p-2 addContactFixed">
     <p class="fw-bold">List contacts</p>
@@ -42,48 +42,67 @@ if (isset($_POST['save'])) {
     $phoneC = $_POST['phone'];
     $addressC = $_POST['adresse'];
     $contact = new Contact($nameC, $emailC, $phoneC, $addressC);
-    $contact->insert('contacts', ['name' => "$nameC", 'email' => "$emailC", 'phone' => "$phoneC", 'address' => "$addressC"]);
+    $contact->insert('contacts', ['name' => $nameC, 'email' => $emailC, 'phone' => $phoneC, 'address' => $addressC, 'fq_u' => $_SESSION['id_u']]);
 }
 ?>
 <!-- form to update contact -->
+<!-- <?php
+        // $contact = new Contact(null, null, null, null);
+        // $contact->select('contacts', 'id_c');
+        // for ($i = 0; $i < count($contact->result) - 1; $i++) {
+        //     $contact = new Contact(null, null, null, null);
+        //     $contact->select('contacts', '*');
+        ?> -->
 <div class="modelEditC">
-    <form class="modal" method="POST" action="" onsubmit="return validInputEditContact()">
+    <form class="modal" method="POST" onsubmit="return validInputEditContact()">
         <p class="h2">Update profile</p>
         <i class="fas fa-times closeEditC btn position-absolute end-0 fs-3"></i>
         <div>
-            <input class="rounded-pill p-2 w-100 " id="nameEdit" type="text" value="afrakla abdelaziz" name="name">
+            <input class="rounded-pill p-2 w-100 " id="nameEdit" type="text" value="" name="name">
             <div class="error text-danger"></div>
         </div>
         <div>
-            <input class="rounded-pill p-2 w-100 email" id="emailEdit" type="email" value="afraklabdelaziz@gmail.com" name="email">
+            <input class="rounded-pill p-2 w-100 email" id="emailEdit" type="email" value="" name="email">
             <div class="error text-danger"></div>
         </div>
         <div>
-            <input class="rounded-pill p-2 w-100 phone" id="phoneEdit" type="text" value="0639616681" name="phone">
+            <input class="rounded-pill p-2 w-100 phone" id="phoneEdit" type="text" value="" name="phone">
             <div class="error text-danger"></div>
         </div>
 
         <div>
-            <input class="rounded-pill p-2 w-100 adresse" id="adresseEdit" type="text" value="Mezguita, agdz, zagora" name="adresse">
+            <input class="rounded-pill p-2 w-100 adresse" id="adresseEdit" type="text" value="" name="adresse">
             <div class="error text-danger"></div>
+            <input type="hidden" id="idC" name="editC" value="">
         </div>
-        <input class="rounded-pill p-2 bg-info" type="submit" value="Update" name="edit">
+        <input class="rounded-pill p-2 bg-info" type="submit" id="edit" value="Update" name="edit">
     </form>
 </div>
 <?php
-if (isset($_POST['Update'])) {
+if (isset($_POST['edit'])) {
+    $id_editC = $_POST['editC'];
     $nameC = $_POST['name'];
     $emailC = $_POST['email'];
     $phoneC = $_POST['phone'];
     $addressC = $_POST['adresse'];
     $contact = new Contact($nameC, $emailC, $phoneC, $addressC);
-    $contact->select('contact', 'id_c');
-    $contact->update('contacts', ['name' => $nameC, 'email' => $emailC, 'phone' => $phoneC, 'address' => $addressC], 'id=id_C');
+    $contact->update('contacts', ['name' => $nameC, 'email' => $emailC, 'phone' => $phoneC, 'address' => $addressC], $id_editC);
 }
 ?>
-
-
-
+<!-- modal delete -->
+<div class="modelDeleteC">
+    <form class="modal" method="POST">
+        <input type="hidden" id="delete" name="deleteC">
+        <input class="rounded-pill p-2 bg-danger" type="submit" id="delete" value="Confirm" name="confirm">
+    </form>
+</div>
+<?php
+if (isset($_POST['confirm'])) {
+    $idC = $_POST['deleteC'];
+    $contact = new Contact(null, null, null, null);
+    $contact->delete('contacts', $idC);
+}
+?>
 <div class="table-responsive d-md-flex justify-content-center">
     <table class="table table-striped align-middle text-center">
         <thead>
@@ -98,163 +117,51 @@ if (isset($_POST['Update'])) {
         </thead>
         <tbody>
             <?php
-            $contact = new Contact('afrakla', 'abdelaziz', '4444', 'jjkfhkdhksd');
-            $contact->select('contacts', '*');
+            $contact = new Contact(null, null, null, null);
+            $contact->select('contacts', '*', $_SESSION['id_u']);
             for ($i = 0; $i < count($contact->result) - 1; $i++) {
             ?>
                 <tr>
                     <td><img class="rounded-circle" src="components/images/abdelaziz.jpg" height="60px" alt=""></td>
-                    <td><?php echo $contact->result[$i]['name'] ?></td>
-                    <td><?php echo $contact->result[$i]['email'] ?></td>
-                    <td><?php echo $contact->result[$i]['phone'] ?></td>
-                    <td><?php echo $contact->result[$i]['address'] ?></td>
+                    <td data-target="name"><?php echo $contact->result[$i]['name'] ?></td>
+                    <td data-target="email"><?php echo $contact->result[$i]['email'] ?></td>
+                    <td data-target="phone"><?php echo $contact->result[$i]['phone'] ?></td>
+                    <td data-target="adresse"><?php echo $contact->result[$i]['address'] ?></td>
                     <td>
-                        <i class="fal btn fa-edit text-info fw-bold fs-3 updateContact"></i>
-                        <i class="fas btn fa-trash-alt text-info fw-bold fs-3"></i>
+                        <i class="fal btn fa-edit text-info fw-bold fs-3 updateContact" data="<?php echo $contact->result[$i]['id_c'] . "/" . $contact->result[$i]['name'] . "/" . $contact->result[$i]['email'] . "/" . $contact->result[$i]['phone'] . "/" . $contact->result[$i]['address'] ?>"></i>
+
+                        <i class="fas btn fa-trash-alt text-info fw-bold fs-3 deleteContact" data="<?php echo $contact->result[$i]['id_c'] ?>"></i>
                     </td>
                 </tr>
-
             <?php } ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            <!-- <tr>
-                <td> <img class="rounded-circle" src="components/images/abdelaziz.jpg" height="60px" alt=""></td>
-                <td>afrakla abdelaziz</td>
-                <td>afraklaabdelaziz@gamil.com</td>
-                <td>0639616681</td>
-                <td> Mewguita, agdz, zagora</td>
-                <td>
-                    <i class="fal btn fa-edit text-info fw-bold fs-3 updateContact"></i>
-                    <i class="fas btn fa-trash-alt text-info fw-bold fs-3"></i>
-                </td>
-            </tr> -->
-            <!-- <tr>
-                <td><img class="rounded-circle" src="components/images/abdelaziz.jpg" height="60px" alt=""></td>
-                <td>afrakla abdelaziz</td>
-                <td>afraklaabdelaziz@gamil.com</td>
-                <td>0639616681</td>
-                <td> Mewguita, agdz, zagora</td>
-                <td>
-                    <i class="fal btn fa-edit text-info fw-bold fs-3 updateContact"></i>
-                    <i class="fas btn fa-trash-alt text-info fw-bold fs-3"></i>
-                </td>
-            </tr>
-            <tr>
-                <td><img class="rounded-circle" src="components/images/abdelaziz.jpg" height="60px" alt=""></td>
-                <td>afrakla abdelaziz</td>
-                <td>afraklaabdelaziz@gamil.com</td>
-                <td>0639616681</td>
-                <td> Mewguita, agdz, zagora</td>
-                <td>
-                    <i class="fal btn fa-edit text-info fw-bold fs-3 updateContact"></i>
-                    <i class="fas btn fa-trash-alt text-info fw-bold fs-3"></i>
-                </td>
-            </tr>
-            <tr>
-                <td><img class="rounded-circle" src="components/images/abdelaziz.jpg" height="60px" alt=""></td>
-                <td>afrakla abdelaziz</td>
-                <td>afraklaabdelaziz@gamil.com</td>
-                <td>0639616681</td>
-                <td> Mewguita, agdz, zagora</td>
-                <td>
-                    <i class="fal btn fa-edit text-info fw-bold fs-3 updateContact"></i>
-                    <i class="fas btn fa-trash-alt text-info fw-bold fs-3"></i>
-                </td>
-            </tr>
-            <tr>
-                <td><img class="rounded-circle" src="components/images/abdelaziz.jpg" height="60px" alt=""></td>
-                <td>afrakla abdelaziz</td>
-                <td>afraklaabdelaziz@gamil.com</td>
-                <td>0639616681</td>
-                <td> Mewguita, agdz, zagora</td>
-                <td>
-                    <i class="fal btn fa-edit text-info fw-bold fs-3 updateContact"></i>
-                    <i class="fas btn fa-trash-alt text-info fw-bold fs-3"></i>
-                </td>
-            </tr>
-            <tr>
-                <td><img class="rounded-circle" src="components/images/abdelaziz.jpg" height="60px" alt=""></td>
-                <td>afrakla abdelaziz</td>
-                <td>afraklaabdelaziz@gamil.com</td>
-                <td>0639616681</td>
-                <td> Mewguita, agdz, zagora</td>
-                <td>
-                    <i class="fal btn fa-edit text-info fw-bold fs-3 updateContact"></i>
-                    <i class="fas btn fa-trash-alt text-info fw-bold fs-3"></i>
-                </td>
-            </tr>
-            <tr>
-                <td><img class="rounded-circle" src="components/images/abdelaziz.jpg" height="60px" alt=""></td>
-                <td>afrakla abdelaziz</td>
-                <td>afraklaabdelaziz@gamil.com</td>
-                <td>0639616681</td>
-                <td> Mezguita, agdz, zagora</td>
-                <td>
-                    <i class="fal btn fa-edit text-info fw-bold fs-3 updateContact"></i>
-                    <i class="fas btn fa-trash-alt text-info fw-bold fs-3"></i>
-                </td>
-            </tr>
-            <tr>
-                <td><img class="rounded-circle" src="components/images/abdelaziz.jpg" height="60px" alt=""></td>
-                <td>afrakla abdelaziz</td>
-                <td>afraklaabdelaziz@gamil.com</td>
-                <td>0639616681</td>
-                <td> Mezguita, agdz, zagora</td>
-                <td>
-                    <i class="fal btn fa-edit text-info fw-bold fs-3 updateContact"></i>
-                    <i class="fas btn fa-trash-alt text-info fw-bold fs-3"></i>
-                </td>
-            </tr>
-            <tr>
-                <td><img class="rounded-circle" src="components/images/abdelaziz.jpg" height="60px" alt=""></td>
-                <td>afrakla abdelaziz</td>
-                <td>afraklaabdelaziz@gamil.com</td>
-                <td>0639616681</td>
-                <td> Mewguita, agdz, zagora</td>
-                <td>
-                    <i class="fal btn fa-edit text-info fw-bold fs-3 updateContact"></i>
-                    <i class="fas btn fa-trash-alt text-info fw-bold fs-3"></i>
-                </td>
-            </tr>
-            <tr>
-                <td><img class="rounded-circle" src="components/images/abdelaziz.jpg" height="60px" alt=""></td>
-                <td>afrakla abdelaziz</td>
-                <td>afraklaabdelaziz@gamil.com</td>
-                <td>0639616681</td>
-                <td> Mewguita, agdz, zagora</td>
-                <td>
-                    <i class="fal btn fa-edit text-info fw-bold fs-3 updateContact"></i>
-                    <i class="fas btn fa-trash-alt text-info fw-bold fs-3"></i>
-                </td>
-            </tr>
-            <tr>
-                <td><img class="rounded-circle" src="components/images/abdelaziz.jpg" height="60px" alt=""></td>
-                <td>afrakla abdelaziz</td>
-                <td>afraklaabdelaziz@gamil.com</td>
-                <td>0639616681</td>
-                <td> Mewguita, agdz, zagora</td>
-                <td>
-                    <i class="fal btn fa-edit text-info fw-bold fs-3 updateContact"></i>
-                    <i class="fas btn fa-trash-alt text-info fw-bold fs-3"></i>
-                </td>
-            </tr> -->
         </tbody>
     </table>
 </div>
+<script>
+    let upDateC = document.querySelectorAll('.updateContact');
+    let idC = document.getElementById('idC');
+    let nameEdit = document.getElementById('nameEdit');
+    let emailEdit = document.getElementById('emailEdit');
+    let phoneEdit = document.getElementById('phoneEdit');
+    let adresseEdit = document.getElementById('adresseEdit');
+    for (const upC of upDateC) {
+        upC.addEventListener('click', function() {
+            var arr = upC.attributes.data.nodeValue.split("/");
+            idC.value = arr[0];
+            nameEdit.value = arr[1];
+            emailEdit.value = arr[2];
+            phoneEdit.value = arr[3];
+            adresseEdit.value = arr[4];
+        })
+    }
+    let deleteC = document.querySelectorAll('.deleteContact');
+    let idDeleteC = document.getElementById('delete');
+    for (const deleteContact of deleteC) {
+        deleteContact.addEventListener('click', function() {
+            idDeleteC.value = deleteContact.attributes.data.nodeValue;
+        })
+    }
+</script>
 <script src="javascript/js.js"></script>
 </body>
 

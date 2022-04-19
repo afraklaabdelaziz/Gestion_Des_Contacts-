@@ -10,6 +10,11 @@ include 'components/header.php';
     <form class="col-md-4 col-11 mt-3" id="formSigUp" method="POST" onsubmit="return validateInput()">
         <p class="text-center fw-bold h2">SING UP</p>
         <p class="text-center">Create your account to generate your contacts</p>
+        <?php
+        if (isset($_GET['error'])) {
+        ?>
+            <p class="alert alert-danger"><?php echo $_GET['error'] ?></p>
+        <?php } ?>
         <div class="form-group p-1">
             <label for="name">User Name</label>
             <input class="form-control rounded-pill" name="username" id="nameS" type="text" placeholder="user name">
@@ -28,16 +33,16 @@ include 'components/header.php';
         <input type="submit" class="btn bg-info mt-2 form-control rounded-pill" name="signup" value=" SING UP">
     </form>
 </div>
+<script src="javaScript/js.js"></script>
+</body>
 <?php
 if (isset($_POST['signup'])) {
     $username = $_POST['username'];
     $password = $_POST['pass'];
     $passwordC = $_POST['passC'];
-    $user = new User(2,$username,$password, date('Y/m/d H,i,s'));
-    $user->signUp($username,$password,$passwordC);
+    $user = new User(2, $username, $password, date('Y/m/d H,i,s'));
+    $user->signUp($username, $password, $passwordC);
 }
 ?>
-<script src="javaScript/js.js"></script>
-</body>
 
 </html>

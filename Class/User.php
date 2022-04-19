@@ -11,10 +11,9 @@ class User extends Database
     private $lastLoginDate;
     public $contactList = array();
     // construct
-    public function __construct($id, $username, $password, $signUpDate)
+    public function __construct($username, $password, $signUpDate)
     {
         parent::__construct();
-        $this->id = $id;
         $this->userName = $username;
         $this->password = $password;
         $this->signUpDate = $signUpDate;
@@ -62,13 +61,18 @@ class User extends Database
     {
         $this->select('user', '*');
         for ($i = 0; $i < count($this->result); $i++) {
-            if (empty($username) && empty($password)) {
+            if (empty($username)) {
+                header('location:login.php?error=enter your username');
+            } else if (empty($password)) {
+                header('location:login.php?error=enter your password');
             } else if ($username == $this->result[$i]['username'] && $password == $this->result[$i]["password"]) {
                 $_SESSION['lastLoginDate'] = date("Y/m/d H:i:s");
                 $_SESSION['name'] = $username;
                 $_SESSION['password'] = $password;
+                $_SESSION['id_u'] = $this->result[$i]['id_u'];
                 header('location:profile.php');
             } else {
+                // header('location:login.php?error=username or password incorrect'); 
             }
         }
     }
@@ -78,9 +82,11 @@ class User extends Database
         $var = 1;
         $this->select('user', '*');
         for ($i = 0; $i < count($this->result); $i++) {
-            if ($username === $this->result[$i]['username']) {
-                echo $this->result[$i]['username'];
+            if (empty($username) && empty($password)) {
                 $var++;
+            } else if ($username === $this->result[$i]['username']) {
+                $var++;
+                header('location:singUp.php? error=username exist');
             } else {
             }
         }
@@ -90,10 +96,7 @@ class User extends Database
             header('location:login.php');
         }
     }
-      public function addContact($nameC,$emailC,$phoneC,$addressC) : Contact{
-      $contact = new Contact($nameC,$emailC,$phoneC,$addressC);
-      return $contact;
-}
+    
 }
 // $obj = new User(2, 'afrakla', 'afraklaab99', date('Y/m/d'));
 // $obj->insert('user', ['username' => 'afrakla', 'password' => 'afraklaab99', 'signUpDate' => date('Y/m/d H:i:s')]);

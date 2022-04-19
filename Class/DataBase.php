@@ -25,7 +25,7 @@ class Database
     }
     public function delete($table, $id)
     {
-        $delete = $this->connection->prepare("DELETE FROM $table WHERE id=$id");
+        $delete = $this->connection->prepare("DELETE FROM $table WHERE id_c = $id");
         $delete->execute();
     }
     public function update($table, $arrayUp = array(), $id)
@@ -36,13 +36,13 @@ class Database
             $args[] = "$key = '$value'";
         }
 
-        $sql = $this->connection->prepare("UPDATE  $table SET " . implode(',', $args) . " WHERE id = $id");
+        $sql = $this->connection->prepare("UPDATE  $table SET " . implode(',', $args) . " WHERE id_c = $id");
         $sql->execute();
     }
     public function select($table, $row = '*', $where = null)
     {
         if ($where != null) {
-            $select = $this->connection->prepare("SELECT $row FROM $table WHERE $where");
+            $select = $this->connection->prepare("SELECT $row FROM $table WHERE fq_u = $where");
         } else {
             $select = $this->connection->prepare("SELECT $row FROM $table");
         }
@@ -51,8 +51,3 @@ class Database
         endwhile;
     }
 }
-$obj = new Database();
-// $obj->select('user', '*');
-// echo '<pre>';
-// var_dump($obj);
-// echo '</pre>';

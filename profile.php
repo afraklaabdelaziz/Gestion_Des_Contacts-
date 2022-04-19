@@ -1,7 +1,7 @@
 <?php
-session_start();
 $list1 = "<a href='index.php'>Home</a>";
 $list2 = "<a href='contacts.php'>Contacts</a>";
+session_start();
 include 'components/head.php';
 include 'components/header.php';
 ?>
@@ -23,17 +23,31 @@ include 'components/header.php';
             <div class="error text-danger"></div>
         </div>
         <div>
-            <input class="rounded-pill p-2 w-100" type="password" id="pass" value="<?php echo $_SESSION['password']?>" name="pass">
+            <input class="rounded-pill p-2 w-100" type="password" id="pass" value="<?php echo $_SESSION['password'] ?>" name="pass">
             <div class="error text-danger"></div>
         </div>
         <div>
-            <input class="rounded-pill p-2 w-100" type="password" id="passC" value="<?php echo $_SESSION['password']?>" name="passC">
+            <input class="rounded-pill p-2 w-100" type="password" id="passC" value="<?php echo $_SESSION['password'] ?>" name="passC">
             <div class="error text-danger"></div>
         </div>
 
-        <input class="rounded-pill p-2 bg-info" type="submit" value="Update">
+        <input class="rounded-pill p-2 bg-info" type="submit" name="edit" value="Update">
     </form>
 </div>
+<?php
+if (isset($_POST['edit'])) {
+    include 'Class/User.php';
+    $username = $_POST['name'];
+    $password = $_POST['pass'];
+    $passwordC = $_POST['passC'];
+    if ($password == $passwordC) {
+        $user = new User($username, $password, date('Y/m/d H:i:s'));
+        $user->select('user', '*');
+        $user->update('user', ['username' => $username, 'password' => $password], $_SESSION['id_u']);
+    }
+}
+
+?>
 <div class="modelDetails">
     <div class="modal">
         <p class="h2">Your profile</p>

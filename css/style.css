@@ -31,7 +31,8 @@ input,
 .modelEditP,
 .modelDetails,
 .modelAddC,
-.modelEditC {
+.modelEditC,
+.modelDeleteC {
     position: fixed;
     top: 0;
     right: 0;

@@ -26,11 +26,9 @@ function error(elem, msg) {
 // validation de form de signUp 
 function validateInput() {
     const userNameSinUp = document.getElementById('nameS');
-    const emailSinUp = document.getElementById('emailS');
     const passSinUp = document.getElementById('passS');
     const passCSinUp = document.getElementById('passCS');
     const nameValue = userNameSinUp.value.trim();
-    const emailValue = emailSinUp.value.trim();
     const passValue = passSinUp.value.trim();
     const passConfValue = passCSinUp.value.trim();
     if (nameValue == '') {
@@ -39,14 +37,6 @@ function validateInput() {
         return error(userNameSinUp, 'format is not valid');
     }else{
        success(userNameSinUp);
-    }
-
-    if (emailValue == '') {
-        return error(emailSinUp, 'please enter your Email');
-    } else if (regexEmail.test(emailValue) == false) {
-        return error(emailSinUp, 'format email is not valid')
-    } else {
-       success(emailSinUp);
     }
     if (passValue == '') {
         return error(passSinUp, 'please enter your Password');
@@ -63,20 +53,29 @@ function validateInput() {
     } else {
          success(passCSinUp)
     }
+    console.log('ffff');
 }
 // end form validation signup
 // star contact
 const addContact = document.querySelector(".addContact");
 const updateContact = document.querySelectorAll(".updateContact");
+const deleteContacts = document.querySelectorAll(".deleteContact");
 for (const upContact of updateContact) {
     upContact.addEventListener("click", function () {
         modalEditeC.classList.toggle("modal-active");
     });
 }
+for (const deleteContact of deleteContacts) {
+    deleteContact.addEventListener("click", function () {
+        modalDeleteC.classList.toggle("modal-active");
+    });
+}
 let modalEditeC = document.querySelector(".modelEditC");
 let modalAddC = document.querySelector(".modelAddC");
+let modalDeleteC = document.querySelector(".modelDeleteC");
 const closeEditC = document.querySelector('.closeEditC');
 const closeAddC = document.querySelector('.closeAddC');
+const closeDeleteC = document.querySelector('.closeDeleteC');
 addContact.addEventListener("click", function () {
     modalAddC.classList.toggle("modal-active");
 });
@@ -85,6 +84,9 @@ closeAddC.addEventListener("click", function () {
 })
 closeEditC.addEventListener("click", function () {
     modalEditeC.classList.toggle("modal-active")
+})
+closeDeleteC.addEventListener("click", function () {
+    modalDeleteC.classList.toggle("modal-active")
 })
 // form validation add contact 
 function validInputAddContact(){
