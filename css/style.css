@@ -89,9 +89,13 @@ table tr {
 }
 
 .success input{
-    border: 2px solid rgb(31, 194, 31);
+    border: 2px solid rgb(31, 194, 31) !important;
+    }
+    
+    .success input::after {
+        content: url("../components/images/lock.svg");
 }
 
 .error input {
-    border: solid 2px red;
+    border: solid 2px red !important;
 }

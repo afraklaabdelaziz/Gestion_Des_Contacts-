@@ -45,5 +45,3 @@ class Contact extends Database {
         $this->address = $address;
     }
 }
-
-?>

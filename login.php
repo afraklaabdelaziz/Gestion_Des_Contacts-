@@ -28,10 +28,9 @@ include 'Class/User.php';
 if (isset($_POST['signin'])) {
     $username = $_POST['username'];
     $password = $_POST['pass'];
-    $user = new User(2, $username, $password, date('Y/m/d H:i:s'));
+    $user = new User($_SESSION['id_u'], $username, $password, date('Y/m/d H:i:s'));
     $user->login($username, $password);
 }
-
 ?>
 </body>
 

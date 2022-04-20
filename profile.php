@@ -1,63 +1,70 @@
 <?php
-$list1 = "<a href='index.php'>Home</a>";
-$list2 = "<a href='contacts.php'>Contacts</a>";
 session_start();
-include 'components/head.php';
-include 'components/header.php';
+if (isset($_SESSION['name'])) {
+    $list1 = "<a href='index.php'>Home</a>";
+    $list2 = "<a href='contacts.php'>Contacts</a>";
+    include 'components/head.php';
+    include 'components/header.php';
 ?>
-<p class="h1 m-5 text-center">Welcome, <span><?php echo $_SESSION['name'] ?></span></p>
-<div class="d-flex flex-column flex-md-row-reverse justify-content-around align-items-center">
-    <img class="col-7 col-md-5" src="components/images/profile.svg" alt="">
-    <div class="d-flex flex-column align-items-center gap-4 gap-md-5 mt-5 m-4 col-md-6 col-11">
-        <a class="btn btn-info col-10 col-md-5 rounded-pill" href="contacts.php">List contacts</a>
-        <div class="btn btn-info col-10 col-md-5 Details rounded-pill">Details</div>
-        <div class="btn btn-info col-10 col-md-5 Profile rounded-pill">Update</div>
+    <p class="h1 m-5 text-center">Welcome, <span><?php echo $_SESSION['name'] ?></span></p>
+    <div class="d-flex flex-column flex-md-row-reverse justify-content-around align-items-center">
+        <img class="col-7 col-md-5" src="components/images/profile.svg" alt="">
+        <div class="d-flex flex-column align-items-center gap-4 gap-md-5 mt-5 m-4 col-md-6 col-11">
+            <a class="btn btn-info col-10 col-md-5 rounded-pill" href="contacts.php">List contacts</a>
+            <div class="btn btn-info col-10 col-md-5 Details rounded-pill">Details</div>
+            <!-- <div class="btn btn-info col-10 col-md-5 Profile rounded-pill">Update</div> -->
+            <a href="logout.php" class="btn btn-info col-10 col-md-5 Profile rounded-pill">logout</a>
+        </div>
     </div>
-</div>
-<div class="modelEditP">
-    <form class="modal" method="POST" onsubmit="return validateInputProfile()">
-        <p class="h2">Update profile</p>
-        <i class="fas fa-times closeEditP btn position-absolute end-0 fs-3"></i>
-        <div>
-            <input class="rounded-pill p-2 w-100" type="text" id="name" value="<?php echo $_SESSION['name'] ?>" name="name">
-            <div class="error text-danger"></div>
-        </div>
-        <div>
-            <input class="rounded-pill p-2 w-100" type="password" id="pass" value="<?php echo $_SESSION['password'] ?>" name="pass">
-            <div class="error text-danger"></div>
-        </div>
-        <div>
-            <input class="rounded-pill p-2 w-100" type="password" id="passC" value="<?php echo $_SESSION['password'] ?>" name="passC">
-            <div class="error text-danger"></div>
-        </div>
+    <div class="modelEditP">
+        <form class="modal" method="POST" onsubmit="return validateInputProfile()">
+            <p class="h2">Update profile</p>
+            <i class="fas fa-times closeEditP btn position-absolute end-0 fs-3"></i>
+            <div>
+                <input class="rounded-pill p-2 w-100" type="text" id="name" value="<?php echo $_SESSION['name'] ?>" name="name">
+                <div class="error text-danger"></div>
+            </div>
+            <div>
+                <input class="rounded-pill p-2 w-100" type="password" id="pass" value="<?php echo $_SESSION['password'] ?>" name="pass">
+                <div class="error text-danger"></div>
+            </div>
+            <div>
+                <input class="rounded-pill p-2 w-100" type="password" id="passC" value="<?php echo $_SESSION['password'] ?>" name="passC">
+                <div class="error text-danger"></div>
+            </div>
 
-        <input class="rounded-pill p-2 bg-info" type="submit" name="edit" value="Update">
-    </form>
-</div>
-<?php
-if (isset($_POST['edit'])) {
-    include 'Class/User.php';
-    $username = $_POST['name'];
-    $password = $_POST['pass'];
-    $passwordC = $_POST['passC'];
-    if ($password == $passwordC) {
-        $user = new User($username, $password, date('Y/m/d H:i:s'));
-        $user->select('user', '*');
-        $user->update('user', ['username' => $username, 'password' => $password], $_SESSION['id_u']);
+            <input class="rounded-pill p-2 bg-info" type="submit" name="edit" value="Update">
+        </form>
+    </div>
+    <?php
+    if (isset($_POST['edit'])) {
+        include 'Class/User.php';
+        $username = $_POST['name'];
+        $password = $_POST['pass'];
+        $passwordC = $_POST['passC'];
+        if ($password == $passwordC) {
+            $user = new User($_SESSION['id_u'], $username, $password, date('Y/m/d H:i:s'));
+            $user->select('user', '*');
+            $user->update('user', ['username' => $username, 'password' => $password], $_SESSION['id_u']);
+        }
     }
-}
 
-?>
-<div class="modelDetails">
-    <div class="modal">
-        <p class="h2">Your profile</p>
-        <i class="fas fa-times closeDetails btn position-absolute end-0 fs-3"></i>
-        <p class="fw-bold mt-5">Username : <span class="fw-normal"><?php echo $_SESSION['name'] ?></span></p>
-        <p class="fw-bold">signup date : <span class="fw-normal"> <?php echo $_SESSION['signUpDate'] ?></span></p>
-        <p class="fw-bold">last login : <span class="fw-normal"><?php echo $_SESSION['lastLoginDate'] ?></span></p>
+    ?>
+    <div class="modelDetails">
+        <div class="modal">
+            <p class="h2">Your profile</p>
+            <i class="fas fa-times closeDetails btn position-absolute end-0 fs-3"></i>
+            <p class="fw-bold mt-5">Username : <span class="fw-normal"><?php echo $_SESSION['name'] ?></span></p>
+            <p class="fw-bold">signup date : <span class="fw-normal"> <?php echo $_SESSION['signUpDate'] ?></span></p>
+            <p class="fw-bold">last login : <span class="fw-normal"><?php echo $_SESSION['lastLoginDate'] ?></span></p>
+        </div>
     </div>
-</div>
-<script src="javaScript/profile.js"></script>
-</body>
+    <script src="javaScript/profile.js"></script>
+    </body>
 
-</html>
+    </html>
+<?php
+} else {
+    header('location:index.php');
+}
+?>

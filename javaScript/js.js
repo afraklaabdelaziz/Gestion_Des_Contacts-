@@ -157,64 +157,28 @@ function validInputEditContact() {
         success(adresseEditContact);
     }
 } 
-// end contact
-
-
-
-// star profile
-const updateProfile = document.querySelector(".Profile");
-const Details = document.querySelector(".Details")
-let modalEditeP = document.querySelector(".modelEditP");
-let modalDetails = document.querySelector(".modelDetails");
-const closeEditP = document.querySelector('.closeEditP');
-const closeDetails = document.querySelector('.closeDetails');
-updateProfile.addEventListener("click", function () {
-    modalEditeP.classList.toggle("modal-active");
-});
-closeEditP.addEventListener("click", function () {
-    modalEditeP.classList.toggle("modal-active")
-})
-Details.addEventListener("click", function () {
-    modalDetails.classList.toggle("modal-active");
-});
-closeDetails.addEventListener("click", function () {
-    modalDetails.classList.toggle("modal-active")
-})
-function validateInputProfile() {
-    const userName = document.getElementById('name');
-    const email = document.getElementById('email');
-    const pass = document.getElementById('pass');
-    const passC = document.getElementById('passC');
-    const nameValue = userName.value.trim();
-    const emailValue = email.value.trim();
-    const passValue = pass.value.trim();
-    const passConfValue = passC.value.trim();
-    if (nameValue == '') {
-       return error(userName, 'please enter your UserName');
-    } else if (regexName.test(nameValue) == false) {
-       return error(userName, 'format is not valid');
-    } else {
-        success(userName);
-    }
-    if (emailValue == '') {
-        return error(email, 'please enter your Email');
-    } else if (regexEmail.test(emailValue) == false) {
-        return error(email, 'format email is not valid')
-    } else {
-        success(email);
-    }
-    // if (passValue == '') {
-    //     error(pass, 'please enter your Password');
-    // } else if (regexPass.test(passValue) == false) {
-    //     error(pass, 'format password is not valid');
-    // } else {
-    //     success(pass);
-    // }
-    // if (passConfValue == '') {
-    //     error(passC, 'please Confirm your password');
-    // } else if (passConfValue != passValue) {
-    //     error(passC, 'please Entre your password');
-    // } else {
-    //     success(passC)
-    // }
+// model Edit and delete to 
+let upDateC = document.querySelectorAll('.updateContact');
+let idC = document.getElementById('idC');
+let nameEdit = document.getElementById('nameEdit');
+let emailEdit = document.getElementById('emailEdit');
+let phoneEdit = document.getElementById('phoneEdit');
+let adresseEdit = document.getElementById('adresseEdit');
+for (const upC of upDateC) {
+    upC.addEventListener('click', function () {
+        var arr = upC.attributes.data.nodeValue.split("/");
+        idC.value = arr[0];
+        nameEdit.value = arr[1];
+        emailEdit.value = arr[2];
+        phoneEdit.value = arr[3];
+        adresseEdit.value = arr[4];
+    })
 }
+let deleteC = document.querySelectorAll('.deleteContact');
+let idDeleteC = document.getElementById('delete');
+for (const deleteContact of deleteC) {
+    deleteContact.addEventListener('click', function () {
+        idDeleteC.value = deleteContact.attributes.data.nodeValue;
+    })
+}
+// end contact

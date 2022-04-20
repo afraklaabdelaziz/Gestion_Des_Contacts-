@@ -30,7 +30,7 @@ include 'components/header.php';
             <input class="form-control rounded-pill" name="passC" id="passCS" type="password" placeholder="confirm password">
             <div class="error text-danger"></div>
         </div>
-        <input type="submit" class="btn bg-info mt-2 form-control rounded-pill" name="signup" value=" SING UP">
+        <input type="submit" class="btn bg-info mt-2 form-control rounded-pill" id="signup" name="signup" value=" SING UP">
     </form>
 </div>
 <script src="javaScript/js.js"></script>
@@ -42,6 +42,7 @@ if (isset($_POST['signup'])) {
     $passwordC = $_POST['passC'];
     $user = new User(2, $username, $password, date('Y/m/d H,i,s'));
     $user->signUp($username, $password, $passwordC);
+    echo "<script> toastr.success('Votre compte a été crée avec success') </script>";
 }
 ?>
 

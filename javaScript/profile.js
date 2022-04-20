@@ -69,18 +69,18 @@ function validateInput() {
     } else {
         success(email);
     }
-    // if (passValue == '') {
-    //     error(pass, 'please enter your Password');
-    // } else if (regexPass.test(passValue) == false) {
-    //     error(pass, 'format password is not valid');
-    // } else {
-    //     success(pass);
-    // }
-    // if (passConfValue == '') {
-    //     error(passC, 'please Confirm your password');
-    // } else if (passConfValue != passValue) {
-    //     error(passC, 'please Entre your password');
-    // } else {
-    //     success(passC)
-    // }
+    if (passValue == '') {
+        error(pass, 'please enter your Password');
+    } else if (regexPass.test(passValue) == false) {
+        error(pass, 'format password is not valid');
+    } else {
+        success(pass);
+    }
+    if (passConfValue == '') {
+        error(passC, 'please Confirm your password');
+    } else if (passConfValue != passValue) {
+        error(passC, 'please Entre your password');
+    } else {
+        success(passC)
+    }
 }

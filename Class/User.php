@@ -1,7 +1,7 @@
 <?php
 session_start();
 date_default_timezone_set('africa/casablanca');
-include 'DataBase.php';
+include 'Contact.php';
 class User extends Database
 {
     private $id;
@@ -11,13 +11,16 @@ class User extends Database
     private $lastLoginDate;
     public $contactList = array();
     // construct
-    public function __construct($username, $password, $signUpDate)
+    public function __construct($id, $username, $password, $signUpDate)
     {
         parent::__construct();
+        $this->id = $id; 
         $this->userName = $username;
         $this->password = $password;
         $this->signUpDate = $signUpDate;
     }
+
+
     // getters
     public function getId()
     {
@@ -56,6 +59,8 @@ class User extends Database
     {
         $this->id = $signUpDate;
     }
+
+
     // login
     public function login($username, $password)
     {
@@ -65,17 +70,23 @@ class User extends Database
                 header('location:login.php?error=enter your username');
             } else if (empty($password)) {
                 header('location:login.php?error=enter your password');
-            } else if ($username == $this->result[$i]['username'] && $password == $this->result[$i]["password"]) {
+            } else if ($username != $this->result[$i]['username']) {
+                header('location:login.php?error=username or password incorrect');
+            } else if ($password != $this->result[$i]["password"]) {
+                header('location:login.php?error=username or password incorrect');
+            } else {
                 $_SESSION['lastLoginDate'] = date("Y/m/d H:i:s");
-                $_SESSION['name'] = $username;
-                $_SESSION['password'] = $password;
+                $_SESSION['name'] = $this->result[$i]['username'];
+                $_SESSION['password'] =  $this->result[$i]["password"];
+                $_SESSION['signUpDate'] = $this->result[$i]["signUpDate"];
                 $_SESSION['id_u'] = $this->result[$i]['id_u'];
                 header('location:profile.php');
-            } else {
-                // header('location:login.php?error=username or password incorrect'); 
+                break;
             }
         }
     }
+
+
     // signup 
     public function signUp($username, $password, $passwordC)
     {
@@ -96,14 +107,13 @@ class User extends Database
             header('location:login.php');
         }
     }
-    
+    public function addContact($nameC, $emailC, $phoneC, $addressC, $fqU): Contact
+    {
+        $contact = new Contact(null, $nameC, $emailC, $phoneC, $addressC, $this->id);
+        $contact->insert('contacts', ['name' => $nameC, 'email' => $emailC, 'phone' => $phoneC, 'address' => $addressC, 'fq_u' => $fqU]);
+        $this->contactList[] = $contact;
+        return $contact;
+    }
 }
-// $obj = new User(2, 'afrakla', 'afraklaab99', date('Y/m/d'));
-// $obj->insert('user', ['username' => 'afrakla', 'password' => 'afraklaab99', 'signUpDate' => date('Y/m/d H:i:s')]);
-// $obj->login('anassss', 'afrakla');
-// $obj->signUp('anassss', 'afrakla', 'afrakla');
-// $obj->signUp('anasss', 'afrakla', 'afrakla');
-// $obj->select('user', '*');
-// echo '<pre>';
-// var_dump($obj);
-// echo '</pre>';
+
+
