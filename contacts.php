@@ -131,7 +131,8 @@ if (isset($_SESSION['name'])) {
                             <i class="fas btn fa-trash-alt text-info fw-bold fs-3 deleteContact" data="<?php echo $contact->result[$i]['id_c'] ?>"></i>
                         </td>
                     </tr>
-                <?php } ?>
+                <?php
+                } ?>
             </tbody>
         </table>
     </div>

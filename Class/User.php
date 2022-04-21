@@ -103,7 +103,6 @@ class User extends Database
         }
         if ($var <= 1) {
             $this->insert('user', ['username' => $username, 'password' => $password, 'signUpDate' => date(" Y/m/d H:i:s")]);
-            $_SESSION['signUpDate'] = date("Y/m/d H:i:s");
             header('location:login.php');
         }
     }

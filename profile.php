@@ -12,44 +12,9 @@ if (isset($_SESSION['name'])) {
         <div class="d-flex flex-column align-items-center gap-4 gap-md-5 mt-5 m-4 col-md-6 col-11">
             <a class="btn btn-info col-10 col-md-5 rounded-pill" href="contacts.php">List contacts</a>
             <div class="btn btn-info col-10 col-md-5 Details rounded-pill">Details</div>
-            <!-- <div class="btn btn-info col-10 col-md-5 Profile rounded-pill">Update</div> -->
             <a href="logout.php" class="btn btn-info col-10 col-md-5 Profile rounded-pill">logout</a>
         </div>
     </div>
-    <div class="modelEditP">
-        <form class="modal" method="POST" onsubmit="return validateInputProfile()">
-            <p class="h2">Update profile</p>
-            <i class="fas fa-times closeEditP btn position-absolute end-0 fs-3"></i>
-            <div>
-                <input class="rounded-pill p-2 w-100" type="text" id="name" value="<?php echo $_SESSION['name'] ?>" name="name">
-                <div class="error text-danger"></div>
-            </div>
-            <div>
-                <input class="rounded-pill p-2 w-100" type="password" id="pass" value="<?php echo $_SESSION['password'] ?>" name="pass">
-                <div class="error text-danger"></div>
-            </div>
-            <div>
-                <input class="rounded-pill p-2 w-100" type="password" id="passC" value="<?php echo $_SESSION['password'] ?>" name="passC">
-                <div class="error text-danger"></div>
-            </div>
-
-            <input class="rounded-pill p-2 bg-info" type="submit" name="edit" value="Update">
-        </form>
-    </div>
-    <?php
-    if (isset($_POST['edit'])) {
-        include 'Class/User.php';
-        $username = $_POST['name'];
-        $password = $_POST['pass'];
-        $passwordC = $_POST['passC'];
-        if ($password == $passwordC) {
-            $user = new User($_SESSION['id_u'], $username, $password, date('Y/m/d H:i:s'));
-            $user->select('user', '*');
-            $user->update('user', ['username' => $username, 'password' => $password], $_SESSION['id_u']);
-        }
-    }
-
-    ?>
     <div class="modelDetails">
         <div class="modal">
             <p class="h2">Your profile</p>
