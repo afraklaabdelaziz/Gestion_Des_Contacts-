@@ -108,7 +108,7 @@ class User extends Database
     }
     public function addContact($nameC, $emailC, $phoneC, $addressC, $fqU): Contact
     {
-        $contact = new Contact(null, $nameC, $emailC, $phoneC, $addressC, $this->id);
+        $contact = new Contact($nameC, $phoneC,$emailC, $addressC);
         $contact->insert('contacts', ['name' => $nameC, 'email' => $emailC, 'phone' => $phoneC, 'address' => $addressC, 'fq_u' => $fqU]);
         $this->contactList[] = $contact;
         return $contact;
